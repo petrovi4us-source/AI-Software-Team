@@ -3115,3 +3115,1209 @@ Decision Framework должен обеспечивать возможность 
 кто или какой процесс принял решение;
 почему решение впоследствии было изменено или сохранено.
 ```
+
+# 5. Requirements Engineering
+
+## 5.1. Назначение главы
+
+Requirements Engineering определяет правила формирования, анализа, принятия, изменения, проверки и трассировки требований к системе, продукту или инженерному процессу.
+
+Requirement является формализованным утверждением о требуемом поведении, свойстве, ограничении или результате системы.
+
+Цель главы — обеспечить, чтобы Requirements могли использоваться как надёжная основа для Engineering Decisions, Architecture, Contracts, Planning, Implementation и Validation.
+
+Requirement не является автоматически Decision, Contract, Task или Verification Result.
+
+---
+
+## 5.2. Requirement как инженерный объект
+
+Requirement является управляемым инженерным объектом, если он используется для принятия решений, проектирования, реализации, проверки или управления изменениями.
+
+Формальное Requirement SHOULD иметь:
+
+* идентификатор;
+* версию;
+* формулировку;
+* статус;
+* источник или происхождение;
+* область применения;
+* приоритет, если он влияет на принятие решений;
+* Verification или Acceptance Criteria, если применима объективная проверка;
+* связи с зависимыми Artifacts и Decisions.
+
+Requirement MAY быть отдельным Artifact либо структурированной частью другого Artifact, если его идентичность, версия, статус и связи могут быть однозначно определены.
+
+Основные различия:
+
+```text
+Requirement ≠ Decision
+Requirement ≠ Contract
+Requirement ≠ Task
+Requirement ≠ Verification Result
+```
+
+Requirement определяет, **что должно быть обеспечено**.
+
+Decision определяет, **какой вариант выбран**.
+
+Contract определяет, **какая работа должна быть выполнена и какой результат ожидается**.
+
+Task определяет, **какое действие необходимо выполнить**.
+
+Verification Result определяет, **подтверждено ли выполнение Requirement**.
+
+---
+
+## 5.3. Источник и происхождение требований
+
+Requirement SHOULD иметь информацию о происхождении, если источник влияет на его интерпретацию, приоритет, принятие или проверку.
+
+Источником Requirement MAY быть:
+
+* пользователь;
+* заказчик;
+* бизнес-процесс;
+* нормативный документ;
+* существующая система;
+* техническое ограничение;
+* Security или Compliance requirement;
+* Engineering Decision;
+* результат анализа;
+* эксплуатационные данные;
+* другой Artifact;
+* Agent;
+* комбинация нескольких источников.
+
+Для значимого Requirement SHOULD быть возможно определить:
+
+```text
+кто или что инициировало Requirement
+→ почему оно возникло
+→ когда оно было сформировано
+→ кем или чем оно было принято
+```
+
+Agent MAY формировать Requirement или предлагать его изменение, но результат работы Agent MUST NOT считаться автоматически принятым Requirement без предусмотренной процедуры принятия.
+
+---
+
+## 5.4. Качество требований
+
+Requirement MUST иметь однозначно определяемый смысл в пределах своего контекста.
+
+Requirement SHOULD:
+
+* выражать один основной нормативный смысл;
+* использовать однозначную терминологию;
+* явно определять объект требования;
+* определять требуемое поведение, свойство или ограничение;
+* избегать субъективных терминов без критериев;
+* отделять нормативную часть от пояснений и rationale;
+* иметь Verification или Acceptance Criteria, если результат может быть объективно проверен.
+
+Формулировки вида:
+
+```text
+система должна быть удобной;
+система должна работать быстро;
+система должна быть достаточно безопасной;
+система должна иметь хороший интерфейс;
+```
+
+не являются достаточными формальными требованиями, если используемые понятия не определены через проверяемые критерии.
+
+Requirement SHOULD быть сформулировано так, чтобы независимая интерпретация человеком или Agent приводила к одному и тому же ожидаемому результату.
+
+---
+
+## 5.5. Классификация требований
+
+Requirement MAY классифицироваться по назначению.
+
+Основные категории:
+
+* Functional Requirements;
+* Non-Functional Requirements;
+* Business Requirements;
+* User Requirements;
+* System Requirements;
+* Interface Requirements;
+* Data Requirements;
+* Security Requirements;
+* Compliance Requirements;
+* Operational Requirements;
+* Constraints.
+
+Классификация используется для поиска, анализа, трассировки и применения специализированных правил.
+
+Классификация MUST NOT изменять нормативный смысл Requirement.
+
+Подробные правила для отдельных типов требований определяются в соответствующих главах настоящего стандарта.
+
+---
+
+## 5.6. Идентификация, версии и статусы
+
+### 5.6.1. Requirement ID
+
+Requirement ID идентифицирует **логическую сущность Requirement**, а не конкретную редакцию текста.
+
+Например:
+
+```text
+REQ-AUTH-001
+```
+
+является идентификатором одного логического Requirement.
+
+Requirement ID SHOULD оставаться стабильным в течение жизненного цикла этого Requirement.
+
+Изменение содержания Requirement SHOULD создавать новую Version, а не новый Requirement ID, если сохраняется логическая идентичность.
+
+---
+
+### 5.6.2. Requirement Version
+
+Version идентифицирует конкретную редакцию Requirement.
+
+Например:
+
+```text
+REQ-AUTH-001 v1
+REQ-AUTH-001 v2
+REQ-AUTH-001 v3
+```
+
+являются версиями одного логического Requirement.
+
+Каждая Version MUST быть однозначно отличима от предыдущих версий.
+
+Version MUST NOT использоваться вместо Requirement ID.
+
+Requirement ID MUST NOT изменяться только потому, что изменилось содержание Requirement.
+
+---
+
+### 5.6.3. Requirement Status
+
+Requirement Status относится к **логическому Requirement**, а не к отдельной Version.
+
+Version не имеет самостоятельной Requirement State Machine.
+
+Корректная модель:
+
+```text
+Requirement ID: REQ-AUTH-001
+Current Version: 2.0
+Status: Accepted
+```
+
+Исторические версии сохраняются для Traceability, но не создают параллельных статусов одного Requirement.
+
+Во время изменения допустимо состояние:
+
+```text
+Requirement ID: REQ-AUTH-001
+Status: Under Review
+
+Current Accepted Version: 1.0
+Candidate Version: 2.0
+```
+
+`Candidate Version` является обозначением предлагаемой редакции и не является отдельным Requirement Status.
+
+---
+
+### 5.6.4. Создание новой Version
+
+Новая Version SHOULD создаваться при изменении нормативного содержания Requirement, способного повлиять на:
+
+* требуемое поведение;
+* обязательное свойство;
+* ограничение;
+* Verification или Acceptance Criteria;
+* область действия;
+* Decisions;
+* Architecture;
+* Contracts;
+* Implementation;
+* Verification.
+
+Пример:
+
+```text
+REQ-AUTH-001 v1
+Система MUST блокировать учётную запись после
+5 последовательных неуспешных попыток.
+
+REQ-AUTH-001 v2
+Система MUST блокировать учётную запись после
+5 последовательных неуспешных попыток в течение 15 минут.
+```
+
+Это один логический Requirement с двумя версиями.
+
+При создании новой Version SHOULD сохраняться:
+
+* предыдущая Version;
+* причина изменения;
+* инициатор;
+* дата;
+* связанные Decisions;
+* затронутые Contracts и Artifacts;
+* результаты Validation;
+* результат Acceptance.
+
+---
+
+### 5.6.5. Создание нового Requirement ID
+
+Новый Requirement ID SHOULD использоваться, если создаётся **новая логическая сущность Requirement**.
+
+Это может происходить, если:
+
+* появляется новое самостоятельное требование;
+* один Requirement разделяется на независимые Requirements;
+* несколько Requirements объединяются в новую логическую сущность;
+* исходное Requirement больше не описывает тот же нормативный объект;
+* сохранение прежней идентичности создаёт неоднозначность.
+
+Например:
+
+```text
+REQ-AUTH-001
+Система MUST блокировать учётную запись
+после заданного количества неудачных попыток.
+
+REQ-AUTH-014
+Система MUST уведомлять администратора
+после блокировки учётной записи.
+```
+
+являются разными Requirements.
+
+Связь между ними SHOULD сохраняться, если новое Requirement возникло в результате разделения, замещения или существенной переработки исходного Requirement.
+
+---
+
+### 5.6.6. Requirement Status State Machine
+
+Единая нормативная state machine Requirement Status:
+
+```text
+Draft
+  ↓
+Under Review
+  ├──→ Accepted
+  ├──→ Rejected
+  └──→ Draft
+
+Accepted
+  ├──→ Under Review
+  ├──→ Superseded
+  └──→ Withdrawn
+
+Rejected
+  └──→ Draft
+
+Withdrawn
+  └──→ Draft
+
+Superseded
+  └── terminal
+```
+
+Статусы имеют следующие значения:
+
+| Status         | Значение                                                                   |
+| -------------- | -------------------------------------------------------------------------- |
+| `Draft`        | Requirement сформулирован, но ещё не принят                                |
+| `Under Review` | Requirement находится на проверке, согласовании или повторном рассмотрении |
+| `Accepted`     | Requirement принят, его Current Version является нормативной               |
+| `Rejected`     | Requirement рассмотрен и не принят                                         |
+| `Withdrawn`    | Requirement формально снят и больше не является действующим                |
+| `Superseded`   | Requirement заменён другим логическим Requirement                          |
+
+`Superseded` является терминальным статусом.
+
+---
+
+### 5.6.7. Допустимые переходы
+
+| Текущий статус | Следующий статус | Условие                                                  |
+| -------------- | ---------------- | -------------------------------------------------------- |
+| `Draft`        | `Under Review`   | Requirement подготовлен к рассмотрению                   |
+| `Under Review` | `Accepted`       | Выполнены обязательные проверки и процедура принятия     |
+| `Under Review` | `Rejected`       | Requirement признан неприемлемым                         |
+| `Under Review` | `Draft`          | Требуется доработка                                      |
+| `Accepted`     | `Under Review`   | Имеется формальное основание для повторного рассмотрения |
+| `Accepted`     | `Superseded`     | Принят другой Requirement, заменяющий данный             |
+| `Accepted`     | `Withdrawn`      | Requirement больше не требуется и формально снят         |
+| `Rejected`     | `Draft`          | Requirement возвращён на доработку                       |
+| `Withdrawn`    | `Draft`          | Requirement повторно инициирован                         |
+
+Следующие прямые переходы MUST NOT выполняться:
+
+```text
+Draft → Accepted
+Draft → Superseded
+Draft → Withdrawn
+
+Under Review → Superseded
+Under Review → Withdrawn
+
+Accepted → Rejected
+Accepted → Draft
+
+Rejected → Accepted
+Withdrawn → Accepted
+
+Superseded → Accepted
+Superseded → Draft
+```
+
+---
+
+### 5.6.8. Повторное рассмотрение
+
+Переход:
+
+```text
+Accepted → Under Review
+```
+
+означает повторное рассмотрение того же логического Requirement.
+
+Если нормативное содержание не изменилось:
+
+```text
+REQ-001 v1
+Status: Accepted
+        ↓
+Review
+        ↓
+REQ-001 v1
+Status: Accepted
+```
+
+Новая Version не требуется.
+
+Если нормативное содержание изменилось:
+
+```text
+REQ-001 v1
+Status: Accepted
+        ↓
+Under Review
+        ↓
+создание REQ-001 v2
+        ↓
+Validation / Acceptance
+        ↓
+REQ-001 v2
+Status: Accepted
+```
+
+Requirement ID остаётся прежним.
+
+---
+
+### 5.6.9. Current Version
+
+Для Requirement в статусе `Accepted` MUST существовать ровно одна Current Version.
+
+Для Requirement в статусе `Under Review` SHOULD быть определены:
+
+* последняя Accepted Version, если она существует;
+* Candidate Version, если предлагается изменение.
+
+Пример:
+
+```text
+Requirement ID: REQ-AUTH-001
+Status: Under Review
+
+Current Accepted Version: 1.0
+Candidate Version: 2.0
+```
+
+До принятия Candidate Version последняя Accepted Version SHOULD оставаться нормативной, если Workflow явно не предусматривает иное.
+
+После принятия:
+
+```text
+Requirement ID: REQ-AUTH-001
+Status: Accepted
+Current Version: 2.0
+```
+
+---
+
+### 5.6.10. Superseded и замещение Requirement
+
+`Superseded` применяется к **логическому Requirement**, если его заменяет другой логический Requirement.
+
+Корректная последовательность:
+
+```text
+REQ-001 Accepted
+      ↓
+REQ-014 Under Review
+      ↓
+REQ-014 Accepted
+      ↓
+REQ-001 Superseded
+```
+
+Обычное Versioning не создаёт `Superseded`:
+
+```text
+REQ-001 v1
+      ↓
+REQ-001 v2
+```
+
+`REQ-001 v1` является исторической версией, а логический `REQ-001` продолжает существовать.
+
+Переход `Accepted → Superseded` MUST указывать на заменяющий Requirement.
+
+---
+
+### 5.6.11. Условия переходов
+
+Значимый переход Requirement Status SHOULD иметь:
+
+* причину;
+* инициатора или Actor;
+* дату;
+* связанные Artifacts;
+* ссылку на Workflow или Contract, если применимо;
+* Review или Validation Result, если переход основан на проверке.
+
+Переход:
+
+```text
+Draft → Under Review
+```
+
+должен означать готовность Requirement к рассмотрению.
+
+Переход:
+
+```text
+Under Review → Accepted
+```
+
+MUST иметь достаточное подтверждение выполнения обязательных условий принятия.
+
+Переход:
+
+```text
+Accepted → Under Review
+```
+
+MUST иметь зафиксированное основание повторного рассмотрения.
+
+Переход:
+
+```text
+Accepted → Superseded
+```
+
+MUST указывать на принятый заменяющий Requirement.
+
+---
+
+## 5.7. Implementation Status
+
+Implementation Status описывает состояние реализации и SHOULD храниться отдельно от Requirement Status.
+
+Например:
+
+```text
+Not Started
+In Progress
+Implemented
+```
+
+`Implemented` означает наличие реализации, предназначенной для выполнения Requirement.
+
+`Implemented` MUST NOT означать, что Requirement прошёл Verification.
+
+Implementation Status MAY иметь собственную state machine в соответствующем Workflow.
+
+---
+
+## 5.8. Verification Status
+
+Verification Status описывает результат проверки выполнения Requirement и SHOULD храниться отдельно от Requirement Status и Implementation Status.
+
+Например:
+
+```text
+Not Verified
+Verification In Progress
+Passed
+Failed
+```
+
+`Passed` означает, что применимая Verification подтвердила выполнение Requirement в определённых условиях.
+
+`Failed` означает, что Verification не подтвердила выполнение Requirement.
+
+Failure Verification MUST NOT автоматически переводить Requirement из `Accepted` в `Rejected`.
+
+Например:
+
+```text
+Requirement Status:   Accepted
+Implementation Status: Implemented
+Verification Status:  Failed
+```
+
+означает, что принятое Requirement не выполнено текущей реализацией.
+
+---
+
+## 5.9. Verification и Acceptance Criteria
+
+Requirement SHOULD иметь Verification или Acceptance Criteria, если его выполнение может и должно быть объективно проверено.
+
+Пример:
+
+```text
+Requirement:
+API MUST возвращать HTTP 401 при отсутствии
+действительной аутентификации.
+
+Verification Criteria:
+- запрос выполняется без authentication credentials;
+- сервер возвращает HTTP 401;
+- ответ соответствует заданному формату ошибки.
+```
+
+Наличие Requirement и успешная Verification являются разными состояниями:
+
+```text
+Requirement
+→ Implementation
+→ Verification
+→ Verification Result
+```
+
+Подробные правила Testing и Verification определяются в Главе 23.
+
+---
+
+## 5.10. Приоритет и ограничения
+
+Requirement SHOULD иметь приоритет, если несколько требований конкурируют за ресурсы или могут конфликтовать.
+
+Приоритет MAY определяться через:
+
+* бизнес-значимость;
+* обязательность;
+* риск;
+* стоимость;
+* влияние на пользователей;
+* Security или Compliance impact;
+* сроки;
+* технические ограничения.
+
+Ограничения, влияющие на реализацию Requirement, SHOULD быть явно зафиксированы.
+
+Requirement MUST NOT молча нарушать другое принятое Requirement или обязательное ограничение.
+
+Обнаруженный конфликт MUST быть обработан установленным процессом.
+
+---
+
+## 5.11. Трассируемость требований
+
+Значимое Requirement SHOULD быть связано с результатами, которые от него зависят.
+
+Типовая цепочка:
+
+```text
+Requirement
+→ Contract
+→ Agent
+→ Artifact
+→ Validation
+```
+
+В зависимости от процесса:
+
+```text
+Requirement
+→ Decision
+→ Architecture
+→ Contract
+→ Implementation
+→ Test
+→ Verification Result
+```
+
+Для критичных или нормативных требований MUST обеспечиваться достаточная Traceability, позволяющая определить:
+
+* происхождение Requirement;
+* Requirement ID;
+* Current Version;
+* текущий Status;
+* связанные Decisions;
+* связанные Contracts;
+* затронутые Artifacts;
+* результаты Validation и Verification;
+* историю значимых изменений.
+
+Трассируемость SHOULD позволять восстановить:
+
+```text
+Requirement ID
+→ Version
+→ Change
+→ Validation
+→ Status Transition
+→ Acceptance
+```
+
+---
+
+## 5.12. Requirements и Engineering Decisions
+
+Requirement определяет необходимость, ограничение или ожидаемый результат.
+
+Engineering Decision определяет выбранный способ достижения результата.
+
+Пример:
+
+```text
+Requirement:
+Система MUST поддерживать не менее 1000 запросов в секунду.
+
+Decision:
+Для обеспечения требуемой производительности используется
+горизонтальное масштабирование сервисов.
+```
+
+Decision MUST NOT изменять принятое Requirement без установленной процедуры изменения Requirement.
+
+Если Decision выявляет невозможность выполнения Requirement, должны быть рассмотрены изменение Requirement, изменение Architecture, альтернативное решение или формальное исключение.
+
+Подробные правила определены в Главе 4.
+
+---
+
+## 5.13. Requirements и Contracts
+
+Contract определяет работу, которая должна быть выполнена, и ожидаемый результат.
+
+Requirement может использоваться как:
+
+* входной критерий Contract;
+* ограничение Contract;
+* критерий результата Contract;
+* источник Verification Criteria.
+
+Contract MUST NOT молча изменять смысл принятого Requirement.
+
+Если выполнение Contract требует изменения Requirement, изменение должно проходить установленный процесс изменения Requirement.
+
+Подробные правила Contracts определены в Главе 3.
+
+---
+
+## 5.14. Requirements и Architecture
+
+Requirements являются одним из основных входов Architecture Stage.
+
+Architecture SHOULD обеспечивать возможность определить, каким образом значимые Requirements будут реализованы.
+
+Architecture MUST учитывать применимые:
+
+* Functional Requirements;
+* Non-Functional Requirements;
+* Constraints;
+* Security Requirements;
+* Interface Requirements;
+* Operational Requirements.
+
+Architecture MUST NOT считаться корректной, если она нарушает принятое Requirement без установленного изменения или исключения.
+
+Подробные правила Architecture определяются в Главе 6.
+
+---
+
+## 5.15. Requirements и Planning
+
+Planning преобразует принятые Requirements в реализуемый набор работ.
+
+Tasks SHOULD иметь связь с Requirements, которые они реализуют или обеспечивают.
+
+Типовая связь:
+
+```text
+Requirement
+→ Task
+→ Implementation
+→ Test
+→ Verification
+```
+
+Task MUST NOT становиться единственным источником нормативного требования, если исходное Requirement существует отдельно.
+
+При изменении Requirement затронутые Tasks SHOULD быть пересмотрены.
+
+---
+
+## 5.16. Изменение требований
+
+Принятое Requirement MUST изменяться через управляемый процесс.
+
+Значимое изменение MUST сохранять историю предыдущих версий.
+
+Базовый процесс изменения:
+
+```text
+REQ-001 v1
+Status: Accepted
+        ↓
+Under Review
+        ↓
+Candidate Version: v2
+        ↓
+Validation / Review
+        ↓
+Accepted
+        ↓
+Current Version = v2
+```
+
+Если новая Version не проходит Acceptance, Requirement MAY вернуться:
+
+```text
+Under Review → Draft
+```
+
+При этом последняя Accepted Version сохраняется как последняя принятая редакция.
+
+Если изменение не затрагивает нормативное содержание Requirement, новая Version MAY не создаваться.
+
+Если изменение создаёт новую логическую сущность, SHOULD использоваться новый Requirement ID.
+
+Если новый Requirement заменяет существующий, новый Requirement MUST быть принят до перевода исходного Requirement в `Superseded`.
+
+Изменение Requirement MAY привести к возврату Workflow на предыдущий Stage.
+
+Изменение Requirement MUST NOT приводить к потере Traceability предыдущих версий.
+
+Общие правила Versioning и Change Management определяются в Главе 13.
+
+---
+
+## 5.17. Неопределённость, вопросы и предположения
+
+Если Requirement невозможно сформулировать однозначно из-за отсутствия информации, неопределённость SHOULD быть явно зафиксирована.
+
+Такая запись MAY содержать:
+
+```text
+Open Question
+Assumption
+Constraint to be confirmed
+Pending Decision
+Unresolved Requirement
+```
+
+Agent MUST NOT незаметно превращать неизвестный факт в принятое Requirement или обязательное ограничение.
+
+Предположение, существенно влияющее на результат, SHOULD быть отделено от Accepted Requirement.
+
+После получения дополнительной информации Requirement SHOULD быть пересмотрено.
+
+---
+
+## 5.18. Requirements Engineering в AI Agent Workflow
+
+AI Agents MAY выполнять:
+
+```text
+извлечение требований
+→ нормализацию
+→ классификацию
+→ поиск противоречий
+→ выявление пропусков
+→ формирование Verification Criteria
+→ анализ зависимостей
+→ подготовку Requirement Proposal
+→ подготовку изменений
+→ Validation Requirement Artifact
+```
+
+Agent SHOULD явно различать:
+
+```text
+Observed Requirement
+Inferred Requirement
+Proposed Requirement
+Accepted Requirement
+Assumption
+Open Question
+```
+
+Agent MUST NOT выдавать собственную интерпретацию за Accepted Requirement без соответствующей authority.
+
+Contract соответствующего Agent SHOULD определять:
+
+* входные данные;
+* допустимые источники;
+* формат результата;
+* правила обработки неопределённости;
+* критерии качества;
+* Validation;
+* условия успешного завершения.
+
+Agent может подготовить:
+
+```text
+Requirement Proposal
+```
+
+но не должен считать его:
+
+```text
+Accepted Requirement
+```
+
+без предусмотренной процедуры принятия.
+
+---
+
+## 5.19. Requirements и Validation
+
+Validation Requirement Artifact проверяет качество и корректность самого Requirement.
+
+Verification проверяет выполнение Requirement системой или другим результатом.
+
+Операции различаются:
+
+```text
+Requirement Validation
+        ↓
+Requirement Acceptance
+        ↓
+Implementation
+        ↓
+Requirement Verification
+```
+
+Validation Requirement MAY проверять:
+
+* однозначность;
+* полноту;
+* непротиворечивость;
+* наличие необходимых ограничений;
+* наличие Verification Criteria;
+* соответствие источнику;
+* отсутствие конфликта с принятыми Requirements.
+
+Verification выполняется после реализации и проверяет соответствие результата Requirement.
+
+---
+
+## 5.20. Практический пример
+
+### Первоначальное требование
+
+```text
+Requirement ID: REQ-AUTH-001
+Version: 1.0
+Status: Accepted
+
+Система MUST блокировать учётную запись после
+5 последовательных неуспешных попыток аутентификации
+в течение 15 минут.
+```
+
+### Повторное рассмотрение
+
+```text
+Requirement ID: REQ-AUTH-001
+Status: Under Review
+
+Current Accepted Version: 1.0
+Candidate Version: 2.0
+
+Reason:
+Изменена политика безопасности.
+```
+
+Candidate Version:
+
+```text
+REQ-AUTH-001 v2.0
+
+Система MUST блокировать учётную запись после
+5 последовательных неуспешных попыток аутентификации
+в течение 10 минут.
+```
+
+После Validation и Acceptance:
+
+```text
+Requirement ID: REQ-AUTH-001
+Version: 2.0
+Status: Accepted
+```
+
+История:
+
+```text
+REQ-AUTH-001 v1.0
+        ↓
+REQ-AUTH-001 v2.0
+```
+
+Логическое Requirement остаётся тем же.
+
+### Новое самостоятельное требование
+
+```text
+REQ-AUTH-014 v1.0
+
+Система MUST уведомлять администратора после
+блокировки учётной записи.
+```
+
+Это отдельное Requirement.
+
+Если оно непосредственно заменяет `REQ-AUTH-001`, после его принятия:
+
+```text
+REQ-AUTH-014
+Status: Accepted
+
+REQ-AUTH-001
+Status: Superseded
+```
+
+---
+
+## 5.21. Антипаттерны
+
+### Новый ID для каждой версии
+
+```text
+REQ-001 v1
+REQ-002 v2
+REQ-003 v3
+```
+
+если все они являются версиями одного логического требования.
+
+Проблема: теряется стабильная идентичность Requirement.
+
+### Один ID для разных логических требований
+
+```text
+REQ-AUTH-001
+
+v1: блокировка учётной записи
+v2: уведомление администратора
+```
+
+если уведомление является самостоятельным требованием.
+
+Проблема: разные логические сущности объединены одним ID.
+
+### Статус версии вместо статуса Requirement
+
+```text
+REQ-001 v1: Accepted
+REQ-001 v2: Under Review
+REQ-001 v3: Draft
+```
+
+как параллельные состояния одного Requirement.
+
+Корректно:
+
+```text
+Requirement ID: REQ-001
+Status: Under Review
+
+Current Accepted Version: v1
+Candidate Version: v2
+```
+
+### Superseded при обычном Versioning
+
+```text
+REQ-001 v1 → Superseded
+REQ-001 v2 → Accepted
+```
+
+если `v1` и `v2` относятся к одному логическому Requirement.
+
+В этом случае `v1` является исторической версией, а не Superseded Requirement.
+
+### Замещение до принятия нового Requirement
+
+```text
+REQ-001 → Superseded
+REQ-014 → Under Review
+```
+
+Проблема: старое Requirement уже снято, а новое ещё не принято.
+
+Корректно:
+
+```text
+REQ-014 → Accepted
+REQ-001 → Superseded
+```
+
+### Requirement как пожелание
+
+```text
+Система должна быть максимально удобной.
+```
+
+Проблема: отсутствуют объективные критерии.
+
+### Requirement как решение
+
+```text
+Использовать Redis для хранения сессий.
+```
+
+Проблема: это техническое решение, а не Requirement.
+
+### Requirement как Task
+
+```text
+Добавить Redis.
+```
+
+Проблема: не определено требуемое системное поведение или свойство.
+
+### Скрытое предположение
+
+Agent использует правило, отсутствующее в Requirement, Contract или Decision, и считает его обязательным.
+
+### Requirement без Verification
+
+Requirement принято, но при наличии объективной возможности проверки отсутствует способ определить его выполнение.
+
+### Смешение статусов
+
+```text
+Requirement Status:    Accepted
+Implementation Status: Implemented
+Verification Status:   Passed
+```
+
+Эти состояния не должны заменять друг друга.
+
+---
+
+## 5.22. Нормативный итог
+
+Requirements Engineering MUST обеспечивать управляемое формирование, принятие, изменение и проверку значимых Requirements.
+
+Requirement ID идентифицирует логическую сущность Requirement.
+
+Version идентифицирует конкретную редакцию Requirement.
+
+Requirement Status относится к логическому Requirement.
+
+`Requirement ID`, `Version` и `Status` являются разными понятиями и MUST NOT использоваться как взаимозаменяемые.
+
+Для `Accepted` Requirement MUST существовать ровно одна Current Version.
+
+Изменение нормативного содержания SHOULD создавать новую Version, если сохраняется логическая идентичность Requirement.
+
+Новый Requirement ID SHOULD использоваться при создании новой логической сущности.
+
+Requirement Status MUST изменяться только по установленной state machine.
+
+Базовые переходы:
+
+```text
+Draft → Under Review → Accepted
+Accepted → Under Review
+Accepted → Superseded
+Accepted → Withdrawn
+Rejected → Draft
+Withdrawn → Draft
+```
+
+При повторном рассмотрении:
+
+```text
+Accepted → Under Review → Accepted
+```
+
+если содержание не изменилось.
+
+При изменении содержания:
+
+```text
+Accepted
+    ↓
+Under Review
+    ↓
+New Version
+    ↓
+Validation / Acceptance
+    ↓
+Accepted
+```
+
+Последняя Accepted Version остаётся нормативной до принятия новой версии, если Workflow явно не определяет иное.
+
+`Superseded` означает замену логического Requirement другим логическим Requirement и не используется для обычных исторических версий.
+
+Значимые Requirements MUST иметь достаточную Traceability для определения их происхождения, состояния, версии, зависимостей и результатов проверки.
+
+Implementation Status и Verification Status SHOULD управляться отдельно от Requirement Status.
+
+Agent MAY формировать, анализировать и изменять Requirements в пределах своего Contract, но MUST NOT самостоятельно принять Requirement без соответствующей authority.
+
+Requirements MUST NOT молча изменяться через Decision, Contract, Task, Architecture или Implementation.
+
+Таким образом, базовая модель Requirements Engineering:
+
+```text
+Requirement ID
+      +
+   Version
+      +
+    Status
+      +
+Traceability
+```
+
+а связанное инженерное состояние:
+
+```text
+Requirement Status
+        +
+Implementation Status
+        +
+Verification Status
+```
+
+Основная инженерная цепочка:
+
+```text
+Requirement
+→ Decision / Architecture / Contract
+→ Agent
+→ Artifact
+→ Validation / Verification
+→ Acceptance
+```
+
+Requirements Engineering связывает потребность или ограничение с последующей инженерной реализацией, сохраняя идентичность, версионность, состояние и Traceability Requirement на протяжении его жизненного цикла.
